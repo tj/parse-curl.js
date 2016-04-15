@@ -64,7 +64,7 @@ module.exports = exports.default = function(s) {
             state = ''
             break;
           case 'data':
-            out.header['Content-Type'] = 'application/x-www-form-urlencoded'
+            out.header['Content-Type'] = out.header['Content-Type'] || 'application/x-www-form-urlencoded'
             out.body = out.body
               ? `${out.body}&${arg}`
               : arg
