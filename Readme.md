@@ -37,7 +37,6 @@ Output:
 
 ## Badges
 
-[![GoDoc](https://godoc.org/github.com/tj/parse-curl.js?status.svg)](https://godoc.org/github.com/tj/parse-curl.js)
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
 ![](https://img.shields.io/badge/status-stable-green.svg)
 
