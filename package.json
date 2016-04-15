@@ -1,0 +1,12 @@
+{
+  "name": "parse-curl",
+  "description": "parses curl commands",
+  "version": "0.0.1",
+  "keywords": [
+    "curl",
+    "parse"
+  ],
+  "dependencies": {
+    "shellwords": "^0.1.0"
+  }
+}
