@@ -49,7 +49,7 @@ module.exports = exports.default = function(s) {
         break;
 
       case arg == '--compressed':
-        out.header['Accept-Encoding'] = 'deflate, gzip'
+        out.header['Accept-Encoding'] = out.header['Accept-Encoding'] || 'deflate, gzip'
         break;
 
       case !!arg:

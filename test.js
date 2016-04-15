@@ -36,6 +36,17 @@ cases.push({
 })
 
 cases.push({
+  input: 'curl -H "Accept-Encoding: gzip" --compressed http://api.sloths.com',
+  output: {
+    method: 'GET',
+    url: 'http://api.sloths.com',
+    header: {
+      'Accept-Encoding': 'gzip'
+    }
+  }
+})
+
+cases.push({
   input: 'curl -X DELETE http://api.sloths.com/sloth/4',
   output: {
     method: 'DELETE',
