@@ -25,6 +25,15 @@ cases.push({
 })
 
 cases.push({
+  input: 'curl -I http://api.sloths.com -vvv --foo --whatever bar',
+  output: {
+    method: 'HEAD',
+    url: 'http://api.sloths.com',
+    header: {}
+  }
+})
+
+cases.push({
   input: 'curl --compressed http://api.sloths.com',
   output: {
     method: 'GET',
