@@ -7,7 +7,6 @@ const url = require('url')
 // TODO --data-urlencode
 // TODO -r, --range
 // TODO -b, --cookie
-// TODO --compressed
 
 /**
  * Attempt to parse the given curl string.
@@ -47,6 +46,10 @@ module.exports = exports.default = function(s) {
 
       case arg == '-X' || arg == '--request':
         state = 'method'
+        break;
+
+      case arg == '--compressed':
+        out.header['Accept-Encoding'] = 'deflate, gzip'
         break;
 
       case !!arg:
