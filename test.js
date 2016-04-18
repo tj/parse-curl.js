@@ -192,7 +192,7 @@ cases.push({
 })
 
 cases.push({
-  input: "curl --cookie 'species=sloth' -b 'type=galactic' slothy https://api.sloths.com",
+  input: "curl --cookie 'species=sloth;type=galactic' slothy https://api.sloths.com",
   output: {
     method: 'GET',
     url: 'https://api.sloths.com',

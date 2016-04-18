@@ -82,8 +82,7 @@ module.exports = exports.default = function(s) {
             state = ''
             break;
           case 'cookie':
-            var field = parseCookieField(arg)
-            out.cookie[field[0]] = field[1]
+            out.cookie = parseCookieField(arg)
             state = ''
             break;
         }
@@ -117,8 +116,13 @@ function rewrite(args) {
 
 function parseCookieField(s) {
   return s
-    .split('=')
-    .map(function(c) { return c.trim() })
+    .split(';')
+    .reduce(function(cookies, cookie) {
+      var field = cookie.split('=')
+      cookies[field[0]] = field[1]
+
+      return cookies
+    }, {})
 }
 
 /**
