@@ -11,8 +11,7 @@ cases.push({
   output: {
     method: 'GET',
     url: 'http://api.sloths.com',
-    header: {},
-    cookie: {}
+    header: {}
   }
 })
 
@@ -21,8 +20,7 @@ cases.push({
   output: {
     method: 'HEAD',
     url: 'http://api.sloths.com',
-    header: {},
-    cookie: {}
+    header: {}
   }
 })
 
@@ -31,8 +29,7 @@ cases.push({
   output: {
     method: 'HEAD',
     url: 'http://api.sloths.com',
-    header: {},
-    cookie: {}
+    header: {}
   }
 })
 
@@ -43,8 +40,7 @@ cases.push({
     url: 'http://api.sloths.com',
     header: {
       'Accept-Encoding': 'deflate, gzip'
-    },
-    cookie: {}
+    }
   }
 })
 
@@ -55,8 +51,7 @@ cases.push({
     url: 'http://api.sloths.com',
     header: {
       'Accept-Encoding': 'gzip'
-    },
-    cookie: {}
+    }
   }
 })
 
@@ -65,8 +60,7 @@ cases.push({
   output: {
     method: 'DELETE',
     url: 'http://api.sloths.com/sloth/4',
-    header: {},
-    cookie: {}
+    header: {}
   }
 })
 
@@ -75,8 +69,7 @@ cases.push({
   output: {
     method: 'PUT',
     url: 'http://api.sloths.com/sloth/4',
-    header: {},
-    cookie: {}
+    header: {}
   }
 })
 
@@ -85,8 +78,7 @@ cases.push({
   output: {
     method: 'GET',
     url: 'https://api.sloths.com',
-    header: {},
-    cookie: {}
+    header: {}
   }
 })
 
@@ -97,8 +89,7 @@ cases.push({
     url: 'https://api.sloths.com',
     header: {
       Authorization: 'Basic dG9iaTpmZXJyZXQ='
-    },
-    cookie: {}
+    }
   }
 })
 
@@ -110,8 +101,7 @@ cases.push({
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: 'foo=bar',
-    cookie: {}
+    body: 'foo=bar'
   }
 })
 
@@ -123,8 +113,7 @@ cases.push({
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: 'foo=bar&bar=baz',
-    cookie: {}
+    body: 'foo=bar&bar=baz'
   }
 })
 
@@ -136,8 +125,7 @@ cases.push({
     header: {
       'Accept': 'text/plain',
       'User-Agent': 'slothy'
-    },
-    cookie: {}
+    }
   }
 })
 
@@ -149,8 +137,7 @@ cases.push({
     header: {
       'Accept': 'text/*',
       'User-Agent': 'slothy'
-    },
-    cookie: {}
+    }
   }
 })
 
@@ -162,20 +149,16 @@ cases.push({
     header: {
       'Accept': 'text/*',
       'User-Agent': 'slothy'
-    },
-    cookie: {}
+    }
   }
 })
 
 cases.push({
-  input: "curl -b 'martial_art=sloth_fu' slothy https://api.sloths.com",
+  input: "curl -b 'foo=bar' slothy https://api.sloths.com",
   output: {
     method: 'GET',
     url: 'https://api.sloths.com',
-    header: {},
-    cookie: {
-      'martial_art': 'sloth_fu'
-    }
+    header: { 'Set-Cookie': 'foo=bar' }
   }
 })
 
@@ -184,10 +167,7 @@ cases.push({
   output: {
     method: 'GET',
     url: 'https://api.sloths.com',
-    header: {},
-    cookie: {
-      'foo': 'bar'
-    }
+    header: { 'Set-Cookie': 'foo=bar' }
   }
 })
 
@@ -196,11 +176,7 @@ cases.push({
   output: {
     method: 'GET',
     url: 'https://api.sloths.com',
-    header: {},
-    cookie: {
-      'species': 'sloth',
-      'type': 'galactic'
-    }
+    header: { 'Set-Cookie': 'species=sloth;type=galactic' }
   }
 })
 

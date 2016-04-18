@@ -14,7 +14,7 @@ const url = require('url')
 module.exports = exports.default = function(s) {
   if (0 != s.indexOf('curl ')) return
   const args = rewrite(words.split(s))
-  const out = { method: 'GET', header: {}, cookie: {}}
+  const out = { method: 'GET', header: {} }
   var state = ''
 
   args.forEach(arg => {
@@ -82,7 +82,7 @@ module.exports = exports.default = function(s) {
             state = ''
             break;
           case 'cookie':
-            out.cookie = parseCookieField(arg)
+            out.header['Set-Cookie'] = arg
             state = ''
             break;
         }
@@ -108,21 +108,6 @@ function rewrite(args) {
 
     return args
   }, [])
-}
-
-/**
- * Parse cookie field.
- */
-
-function parseCookieField(s) {
-  return s
-    .split(';')
-    .reduce(function(cookies, cookie) {
-      var field = cookie.split('=')
-      cookies[field[0]] = field[1]
-
-      return cookies
-    }, {})
 }
 
 /**
