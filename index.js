@@ -6,7 +6,6 @@ const url = require('url')
 // TODO --data-binary
 // TODO --data-urlencode
 // TODO -r, --range
-// TODO -b, --cookie
 
 /**
  * Attempt to parse the given curl string.
@@ -15,7 +14,7 @@ const url = require('url')
 module.exports = exports.default = function(s) {
   if (0 != s.indexOf('curl ')) return
   const args = rewrite(words.split(s))
-  const out = { method: 'GET', header: {} }
+  const out = { method: 'GET', header: {}, cookie: {}}
   var state = ''
 
   args.forEach(arg => {
@@ -48,6 +47,10 @@ module.exports = exports.default = function(s) {
         state = 'method'
         break;
 
+      case arg == '-b' || arg =='--cookie':
+        state = 'cookie'
+        break;
+
       case arg == '--compressed':
         out.header['Accept-Encoding'] = out.header['Accept-Encoding'] || 'deflate, gzip'
         break;
@@ -78,6 +81,11 @@ module.exports = exports.default = function(s) {
             out.method = arg
             state = ''
             break;
+          case 'cookie':
+            var field = parseCookieField(arg)
+            out.cookie[field[0]] = field[1]
+            state = ''
+            break;
         }
         break;
     }
@@ -101,6 +109,16 @@ function rewrite(args) {
 
     return args
   }, [])
+}
+
+/**
+ * Parse cookie field.
+ */
+
+function parseCookieField(s) {
+  return s
+    .split('=')
+    .map(function(c) { return c.trim() })
 }
 
 /**
