@@ -69,12 +69,12 @@ module.exports = exports.default = function(s) {
           case 'data':
             out.header['Content-Type'] = out.header['Content-Type'] || 'application/x-www-form-urlencoded'
             out.body = out.body
-              ? `${out.body}&${arg}`
+              ? out.body + '&' + arg
               : arg
             state = ''
             break;
           case 'user':
-            out.header['Authorization'] = `Basic ${btoa(arg)}`
+            out.header['Authorization'] = 'Basic ' + btoa(arg)
             state = ''
             break;
           case 'method':
