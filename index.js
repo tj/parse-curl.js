@@ -98,7 +98,7 @@ module.exports = exports.default = function(s) {
  */
 
 function rewrite(args) {
-  return args.reduce((args, a) => {
+  return args.reduce(function(args, a){
     if (0 == a.indexOf('-X')) {
       args.push('-X')
       args.push(a.slice(2))
