@@ -17,7 +17,7 @@ module.exports = exports.default = function(s) {
   const out = { method: 'GET', header: {} }
   var state = ''
 
-  args.forEach(arg => {
+  args.forEach(function(arg){
     switch (true) {
       case isURL(arg):
         out.url = arg
