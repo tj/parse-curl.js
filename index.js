@@ -1,6 +1,6 @@
 
-const words = require('shellwords')
-const url = require('url')
+var words = require('shellwords')
+var url = require('url')
 
 // TODO -F, --form
 // TODO --data-binary
@@ -13,8 +13,8 @@ const url = require('url')
 
 module.exports = exports.default = function(s) {
   if (0 != s.indexOf('curl ')) return
-  const args = rewrite(words.split(s))
-  const out = { method: 'GET', header: {} }
+  var args = rewrite(words.split(s))
+  var out = { method: 'GET', header: {} }
   var state = ''
 
   args.forEach(function(arg){
