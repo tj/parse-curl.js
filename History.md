@@ -1,4 +1,9 @@
 
+v0.2.4 / 2016-05-08
+===================
+
+  * change const -> var, breaks some browserify stuff
+
 v0.2.3 / 2016-04-21
 ===================
 
