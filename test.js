@@ -96,7 +96,7 @@ cases.push({
 cases.push({
   input: 'curl -d "foo=bar" https://api.sloths.com',
   output: {
-    method: 'GET',
+    method: 'POST',
     url: 'https://api.sloths.com',
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -108,7 +108,7 @@ cases.push({
 cases.push({
   input: 'curl -d "foo=bar" -d bar=baz https://api.sloths.com',
   output: {
-    method: 'GET',
+    method: 'POST',
     url: 'https://api.sloths.com',
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
