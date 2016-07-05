@@ -1,6 +1,5 @@
 
 var words = require('shellwords')
-var url = require('url')
 
 // TODO -F, --form
 // TODO --data-binary
