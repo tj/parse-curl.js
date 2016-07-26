@@ -1,5 +1,6 @@
 
 var words = require('shellwords')
+var url = require('url')
 
 // TODO -F, --form
 // TODO --data-binary
@@ -49,7 +50,9 @@ module.exports = exports.default = function(s) {
       case arg == '-b' || arg =='--cookie':
         state = 'cookie'
         break;
-
+      case arg == "--data-binary":
+        state = 'form'
+        break;
       case arg == '--compressed':
         out.header['Accept-Encoding'] = out.header['Accept-Encoding'] || 'deflate, gzip'
         break;
@@ -63,6 +66,23 @@ module.exports = exports.default = function(s) {
             break;
           case 'user-agent':
             out.header['User-Agent'] = arg
+            state = ''
+            break;
+          case 'form':
+            if (out.method == 'GET' || out.method == 'HEAD') out.method = 'POST'
+            out.header['Content-Type'] = out.header['Content-Type'] || 'application/x-www-form-urlencoded'
+            form_data = arg.split(";");
+            var boundary = form_data[0].match(/^\$(.*?)r\\n/)[1];
+            re = new RegExp('^\\sname=\"(.*)\"\\\\r\\\\n\\\\r\\\\n(.*?)\\\\r\\\\n'+boundary.replace(/\-/g, "\\-"));
+            out.body = {};
+            for (var index in form_data) {
+              if (index == 0)
+                continue;
+              var string = form_data[index];
+              if (m = re.exec(string)) {
+                out.body[m[1]] = m[2];
+              }
+            }
             state = ''
             break;
           case 'data':
@@ -89,7 +109,6 @@ module.exports = exports.default = function(s) {
         break;
     }
   })
-
   return out
 }
 
