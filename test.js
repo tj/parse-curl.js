@@ -34,6 +34,17 @@ cases.push({
 })
 
 cases.push({
+  input: 'curl -H "Origin: https://example.com" https://example.com',
+  output: {
+    method: 'GET',
+    url: 'https://example.com',
+    header: {
+      Origin: "https://example.com"
+    }
+  }
+})
+
+cases.push({
   input: 'curl --compressed http://api.sloths.com',
   output: {
     method: 'GET',
