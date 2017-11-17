@@ -1,4 +1,11 @@
 
+v0.2.6 / 2017-11-16
+===================
+
+  * fix fields which contain ":". Closes #10
+  * Merge pull request #6 from radiovisual/master
+  * remove unused import
+
 v0.2.5 / 2016-07-03
 ===================
 
