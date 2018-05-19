@@ -2,6 +2,10 @@
   "name": "parse-curl",
   "description": "parses curl commands",
   "version": "0.2.6",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tj/parse-curl.js.git"
+  },
   "keywords": [
     "curl",
     "parse"
