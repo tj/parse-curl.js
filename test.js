@@ -76,7 +76,7 @@ cases.push({
 })
 
 cases.push({
-  input: 'curl -XPUT http://api.sloths.com/sloth/4',
+  input: 'curl -X PUT http://api.sloths.com/sloth/4',
   output: {
     method: 'PUT',
     url: 'http://api.sloths.com/sloth/4',
