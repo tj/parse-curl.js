@@ -30,7 +30,7 @@ module.exports = exports.default = function(s) {
         state = 'header'
         break;
 
-      case arg == '-d' || arg == '--data' || arg == '--data-ascii':
+      case arg == '-d' || arg == '--data' || arg == '--data-ascii' || arg == '--data-raw':
         state = 'data'
         break;
 
