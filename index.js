@@ -1,5 +1,6 @@
 
 var words = require('shellwords')
+var url = require('url')
 
 // TODO -F, --form
 // TODO --data-binary
@@ -15,7 +16,7 @@ module.exports = exports.default = function(s) {
   var args = rewrite(words.split(s))
   var out = { method: 'GET', header: {} }
   var state = ''
-
+  var boundary = ""
   args.forEach(function(arg){
     switch (true) {
       case isURL(arg):
@@ -49,7 +50,9 @@ module.exports = exports.default = function(s) {
       case arg == '-b' || arg =='--cookie':
         state = 'cookie'
         break;
-
+      case arg == "--data-binary":
+        state = 'form'
+        break;
       case arg == '--compressed':
         out.header['Accept-Encoding'] = out.header['Accept-Encoding'] || 'deflate, gzip'
         break;
@@ -59,10 +62,44 @@ module.exports = exports.default = function(s) {
           case 'header':
             var field = parseField(arg)
             out.header[field[0]] = field[1]
+            if (field[0] == 'Content-Type') {
+              if (match = field[1].match(/boundary=(.*?)$/))
+                boundary = match[1]
+            }
             state = ''
             break;
           case 'user-agent':
             out.header['User-Agent'] = arg
+            state = ''
+            break;
+          case 'form':
+            if (out.method == 'GET' || out.method == 'HEAD') out.method = 'POST'
+            out.header['Content-Type'] = out.header['Content-Type'] || 'application/x-www-form-urlencoded'
+            form_data = arg.split("form-data;");
+            if (typeof window != 'undefined') {
+              re = new RegExp('^\\sname="(.*)"\\\\r\\\\n\\\\r\\\\n(.*?)\\\\r\\\\n--'+boundary)
+            } else {
+              re = new RegExp('^\\sname="(.*)"\\r\\n\\r\\n(.*?)\\r\\n--'+boundary)
+            }
+            out.body = {};
+            for (var index in form_data) {
+              if (index == 0)
+                continue;
+              var string = form_data[index];
+              if (m = re.exec(string)) {
+                out.body[m[1]] = m[2];
+              } else {
+                // Upload file
+                if (typeof window != 'undefined') {
+                  re2 = new RegExp('^\\sname="(.*)";.*?filename="(.*?)"\\\\r\\\\n(.*?)\\\\r\\\\n\\\\r\\\\n\\\\r\\\\n--'+boundary)
+                } else {
+                  re2 = new RegExp('^\\sname="(.*)";.*?filename="(.*?)"\\r\\n(.*?)\\r\\n\\r\\n\\r\\n--'+boundary)
+                }
+                if (m = re2.exec(string)) {
+                  out.body[m[1]] = {filename: m[2]};
+                }
+              }
+            }
             state = ''
             break;
           case 'data':
@@ -89,7 +126,6 @@ module.exports = exports.default = function(s) {
         break;
     }
   })
-
   return out
 }
 

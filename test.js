@@ -190,6 +190,42 @@ cases.push({
     header: { 'Set-Cookie': 'species=sloth;type=galactic' }
   }
 })
+cases.push({
+  input: 'curl \'https://api.sloths.com\' -H \'Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryJ3Km5hSrAfDw4a9q\' --data-binary $\'------WebKitFormBoundaryJ3Km5hSrAfDw4a9q\r\nContent-Disposition: form-data; name="close"\r\n\r\n\r\n------WebKitFormBoundaryJ3Km5hSrAfDw4a9q\r\nContent-Disposition: form-data; name="body"\r\n\r\nhello world!\r\n------WebKitFormBoundaryJ3Km5hSrAfDw4a9q\r\nContent-Disposition: form-data; name="type"\r\n\r\n0\r\n------WebKitFormBoundaryJ3Km5hSrAfDw4a9q\r\nContent-Disposition: form-data; name="icon"; filename=""\r\nContent-Type: application/octet-stream\r\n\r\n\r\n------WebKitFormBoundaryJ3Km5hSrAfDw4a9q--\r\n\'',
+  output: {
+    method: "POST",
+    header: {
+      "Content-Type":"multipart/form-data; boundary=----WebKitFormBoundaryJ3Km5hSrAfDw4a9q"
+    },
+    url: 'https://api.sloths.com',
+    body: {
+      close: "",
+      body: "hello world!",
+      type: 0,
+      icon: {filename: ""}
+    }
+  }
+})
+
+cases.push({
+  input: 'curl \'https://api.sloths.com\' -H \'Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryHKOJEwZFCnY9xIEy\' --data-binary $\'------WebKitFormBoundaryHKOJEwZFCnY9xIEy\r\nContent-Disposition: form-data; name="show"\r\n\r\n615727\r\n------WebKitFormBoundaryHKOJEwZFCnY9xIEy\r\nContent-Disposition: form-data; name="body"\r\n\r\nhello world!\r\n------WebKitFormBoundaryHKOJEwZFCnY9xIEy\r\nContent-Disposition: form-data; name="type"\r\n\r\n0\r\n------WebKitFormBoundaryHKOJEwZFCnY9xIEy\r\nContent-Disposition: form-data; name="icon"; filename="testorig.jpg"\r\nContent-Type: image/jpeg\r\n\r\n\r\n------WebKitFormBoundaryHKOJEwZFCnY9xIEy\r\nContent-Disposition: form-data; name="serviceId"\r\n\r\nAAA\r\n------WebKitFormBoundaryHKOJEwZFCnY9xIEy\r\nContent-Disposition: form-data; name="accessToken"\r\n\r\nBBB\r\n------WebKitFormBoundaryHKOJEwZFCnY9xIEy--\r\n\'',
+  output: {
+    method: "POST",
+    header: {
+      "Content-Type":"multipart/form-data; boundary=----WebKitFormBoundaryHKOJEwZFCnY9xIEy"
+    },
+    url: 'https://api.sloths.com',
+    body: {
+      show: "615727",
+      body: "hello world!",
+      type: 0,
+      icon: {filename: "testorig.jpg"},
+      serviceId: "AAA",
+      accessToken: "BBB"
+    }
+  }
+})
+
 
 cases.forEach(function(c){
   const out = parse(c.input)
