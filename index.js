@@ -93,6 +93,38 @@ module.exports = exports.default = function(s) {
   return out
 }
 
+module.exports.parse = module.exports.default
+module.exports.serialize = function(o) {
+  let s = "curl "
+  if (o.method != "GET")
+    s += "-X " + o.method + " "
+
+  for (let h in o.header) {
+    let value = o.header[h]
+    switch (h) {
+      case 'User-Agent':
+        s += '-A ' + value + ' '
+        break;
+
+      // simple quotes to avoid bash errors with multi-parameters (&)
+      case 'Set-Cookie':
+        s += "-b '" + value + "' "
+        break;
+
+      default:
+        s += "-H '" + h + ": " + value + "' "
+        break;
+    }
+  }
+
+  if (o.body)
+    s += "-d '" + o.body + "' "
+
+  s += o.url
+
+  return s
+}
+
 /**
  * Rewrite args for special cases such as -XPUT.
  */

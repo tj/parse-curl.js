@@ -1,6 +1,6 @@
-
+//
 const assert = require('assert')
-const parse = require('./index')
+const parseCurl = require('./index')
 
 btoa = s => new Buffer(s).toString('base64')
 
@@ -192,7 +192,7 @@ cases.push({
 })
 
 cases.forEach(function(c){
-  const out = parse(c.input)
+  const out = parseCurl(c.input)
 
   const msg = `
        input: ${c.input}
@@ -201,6 +201,28 @@ cases.forEach(function(c){
   `
 
   assert.deepEqual(out, c.output, msg)
+})
+
+// serialize cases
+const serializeCases = [];
+serializeCases.push({
+  msg: 'basic cover case',
+  input: {
+    method: 'GET',
+    url: 'https://api.sloths.com',
+    body: 'foo=bar',
+    header: {
+      'Accept': 'text/*',
+      'User-Agent': 'slothy',
+      'Set-Cookie': 'foo=bar'
+    }
+  },
+  output: "curl -H 'Accept: text/*' -A slothy -b 'foo=bar' -d 'foo=bar' https://api.sloths.com"
+})
+
+serializeCases.forEach(c => {
+  const out = parseCurl.serialize(c.input)
+  assert.deepEqual(out, c.output, c.msg)
 })
 
 console.log('\n  :)\n')
