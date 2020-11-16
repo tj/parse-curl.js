@@ -67,7 +67,6 @@ module.exports = exports.default = function(s) {
             break;
           case 'data':
             if (out.method == 'GET' || out.method == 'HEAD') out.method = 'POST'
-            out.header['Content-Type'] = out.header['Content-Type'] || 'application/x-www-form-urlencoded'
             out.body = out.body
               ? out.body + '&' + arg
               : arg
@@ -89,6 +88,16 @@ module.exports = exports.default = function(s) {
         break;
     }
   })
+
+  // Look for content-type using case-insensitive matching
+  var contentTypeMissing = out.body && Object.keys(out.header)
+    .filter(function (name) {
+      return name.toLowerCase() === 'content-type'
+    })
+    .length === 0
+  if (contentTypeMissing) {
+    out.header['Content-Type'] = 'application/x-www-form-urlencoded'
+  }
 
   return out
 }

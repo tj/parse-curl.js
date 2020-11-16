@@ -191,6 +191,16 @@ cases.push({
   }
 })
 
+cases.push({
+  input: "curl -H 'content-type: application/json' -d price=1 https://api.sloths.com",
+  output: {
+    method: 'POST',
+    url: 'https://api.sloths.com',
+    header: { 'content-type': 'application/json' },
+    body: "price=1"
+  }
+})
+
 cases.forEach(function(c){
   const out = parse(c.input)
 
