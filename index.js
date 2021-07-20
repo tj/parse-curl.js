@@ -67,7 +67,7 @@ module.exports = exports.default = function(s) {
             break;
           case 'data':
             if (out.method == 'GET' || out.method == 'HEAD') out.method = 'POST'
-            if(!out.header['Content-Type'] || !out.header['content-type']) {
+            if(!out.header['Content-Type'] && !out.header['content-type']) {
               out.header['Content-Type'] = 'application/x-www-form-urlencoded';
             }
             out.body = out.body
