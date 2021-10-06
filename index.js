@@ -76,7 +76,7 @@ module.exports = exports.default = function(s) {
             state = ''
             break;
           case 'user':
-            out.header['Authorization'] = 'Basic ' + window ? btoa(arg) : Buffer.from(arg).toString('base64')
+            out.header['Authorization'] = 'Basic ' + (typeof window !== 'undefined' ? btoa(arg) : Buffer.from(arg).toString('base64'))
             state = ''
             break;
           case 'method':
