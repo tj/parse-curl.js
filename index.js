@@ -53,11 +53,29 @@ module.exports = exports.default = function(s) {
       case arg == '--compressed':
         out.header['Accept-Encoding'] = out.header['Accept-Encoding'] || 'deflate, gzip'
         break;
+      
+      case arg == '-F' || arg == '--form':
+        state = 'form'
+        break
 
       case !!arg:
         switch (state) {
+          case 'form':
+            if (!out.method || ['GET', 'HEAD'].includes(out.method) ) out.method = 'POST'
+
+            out.header['Content-Type'] = 'multipart/form-data'
+
+            const field = parseField(arg.replace(/\"/g, ''), '=')
+            
+            if (typeof out.body !== 'object' || Object.keys(out.body) === 0) {
+              out.body = {
+                [field[0]]: field[1]
+              }
+            } else out.body[field[0]] = field[1]
+            state = ''
+            break;
           case 'header':
-            var field = parseField(arg)
+            field = parseField(arg, ': ')
             out.header[field[0]] = field[1]
             state = ''
             break;
@@ -116,8 +134,8 @@ function rewrite(args) {
  * Parse header field.
  */
 
-function parseField(s) {
-  return s.split(/: (.+)/)
+function parseField(s, separator) {
+  return s.split(new RegExp(`${separator}(.+)`))
 }
 
 /**
