@@ -64,24 +64,28 @@ module.exports = exports.default = function (s) {
       case !!arg:
         switch (state) {
           case 'form':
-            if (!out.method || ['GET', 'HEAD'].includes(out.method))
-              out.method = 'POST'
+            {
+              if (!out.method || ['GET', 'HEAD'].includes(out.method))
+                out.method = 'POST'
 
-            out.header['Content-Type'] = 'multipart/form-data'
+              out.header['Content-Type'] = 'multipart/form-data'
 
-            const field = parseField(arg.replace(/\"/g, ''), '=')
+              const field = parseField(arg.replace(/\"/g, ''), '=')
 
-            if (typeof out.body !== 'object' || Object.keys(out.body) === 0) {
-              out.body = {
-                [field[0]]: field[1],
-              }
-            } else out.body[field[0]] = field[1]
-            state = ''
+              if (typeof out.body !== 'object' || Object.keys(out.body) === 0) {
+                out.body = {
+                  [field[0]]: field[1],
+                }
+              } else out.body[field[0]] = field[1]
+              state = ''
+            }
             break
           case 'header':
-            field = parseField(arg, ': ')
-            out.header[field[0]] = field[1]
-            state = ''
+            {
+              const field = parseField(arg, ': ')
+              out.header[field[0]] = field[1]
+              state = ''
+            }
             break
           case 'user-agent':
             out.header['User-Agent'] = arg
