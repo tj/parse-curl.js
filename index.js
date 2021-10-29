@@ -97,6 +97,11 @@ module.exports = exports.default = function (s) {
               out.header['Content-Type'] = 'application/x-www-form-urlencoded'
             }
             out.body = out.body ? out.body + '&' + arg : arg
+
+            if (
+              out.header['Content-Type'] === 'application/json'
+              || out.header['content-type'] === 'application/json'
+            ) out.body = out.body.replaceAll('\\"', '"')
             state = ''
             break
           case 'user':
