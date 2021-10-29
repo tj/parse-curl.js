@@ -98,6 +98,8 @@ module.exports = exports.default = function (s) {
             }
             out.body = out.body ? out.body + '&' + arg : arg
 
+            // Replace '\"' generated at the time of split string
+            // Which convert JSON string into the invalid format
             if (
               out.header['Content-Type'] === 'application/json'
               || out.header['content-type'] === 'application/json'
