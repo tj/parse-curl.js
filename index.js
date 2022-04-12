@@ -57,8 +57,10 @@ module.exports = exports.default = function (s) {
                 switch (state) {
                     case 'header':
                         const field = parseField(arg);
-                        out.header[field[0]] = field[1]
-                        state = ''
+                        if (field[1] !== undefined) {
+                            out.header[field[0]] = field[1];
+                            state = ''
+                        }
                         break;
                     case 'user-agent':
                         out.header['User-Agent'] = arg
