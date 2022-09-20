@@ -135,12 +135,12 @@ function isURL(s) {
 
 function handleHeader(curl) {
     //content-type
-    if (curl.header['content-type'] && curl.method === "POST") {
+    if (curl.header['content-type'] === undefined && curl.method === "POST") {
         curl.header['content-type'] = 'application/x-www-form-urlencoded';
     }
     //content-length
-    if (curl.header['content-length'] && curl.body) {
-        curl.header['content-length'] = new ArrayBuffer(curl.body).byteLength
+    if (curl.header['content-length'] === undefined && curl.body) {
+        curl.header['content-length'] = Buffer.byteLength(curl.body)
     }
 }
 

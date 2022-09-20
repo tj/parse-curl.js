@@ -7,11 +7,12 @@ btoa = s => new Buffer(s).toString('base64')
 const cases = []
 
 cases.push({
-    input: 'curl http://api.sloths.com',
+    input: 'curl http://api.sloths.com --data-raw \'A=B你好\'',
     output: {
-        method: 'GET',
+        method: 'POST',
         url: 'http://api.sloths.com',
-        header: {}
+        header: {},
+        body: "A=B你好"
     }
 })
 
