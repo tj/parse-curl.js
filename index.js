@@ -85,20 +85,16 @@ const parse = function (s) {
                 break;
         }
     })
-    console.log("out", out)
     return out
 };
 
 
 const safeParse = function (curlStr) {
     let curl = parse(curlStr)
-    console.log("asfasdfasdf", curl)
     //header的key转小写
     allHeaderToLowcase(curl.header);
     //转换header
     handleHeader(curl)
-    console.log("aaaaaaaaaa", curl)
-
     return curl
 };
 
@@ -144,7 +140,7 @@ function handleHeader(curl) {
     }
     //content-length
     if (curl.header['content-length'] === undefined && curl.body !== undefined) {
-        curl.header['content-length'] = Buffer.byteLength(body)
+        curl.header['content-length'] = Buffer.byteLength(curl.body)
     }
 }
 
