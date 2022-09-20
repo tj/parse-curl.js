@@ -145,7 +145,7 @@ function handleHeader(curl) {
     }
     //Accept-Encoding
     if (curl.header['accept-encoding']) {
-        delete curl.headers['accept-encoding'];
+        delete curl.header['accept-encoding'];
     }
 }
 
