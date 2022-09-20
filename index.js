@@ -92,10 +92,12 @@ const parse = function (s) {
 
 const safeParse = function (curlStr) {
     let curl = parse(curlStr)
-    //header的key转小写
-    allHeaderToLowercase(curl.header);
-    //转换header
-    handleHeader(curl)
+    if (curl) {
+        //header的key转小写
+        allHeaderToLowercase(curl.header);
+        //转换header
+        handleHeader(curl)
+    }
     return curl
 };
 
