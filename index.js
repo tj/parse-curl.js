@@ -92,7 +92,7 @@ const parse = function (s) {
 const safeParse = function (curlStr) {
     let curl = parse(curlStr)
     //header的key转小写
-    allHeaderToLowcase(curl.header);
+    allHeaderToLowercase(curl.header);
     //转换header
     handleHeader(curl)
     return curl
@@ -140,11 +140,11 @@ function handleHeader(curl) {
     }
     //content-length
     if (curl.header['content-length'] === undefined && curl.body !== undefined) {
-        curl.header['content-length'] = Buffer.byteLength(curl.body)
+        curl.header['content-length'] = new ArrayBuffer(curl.body).byteLength
     }
 }
 
-function allHeaderToLowcase(headers) {
+function allHeaderToLowercase(headers) {
     for (const key in headers) {
         headers[key.toLowerCase()] = headers[key]
         if (key !== key.toLowerCase()) {
