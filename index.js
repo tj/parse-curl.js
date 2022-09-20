@@ -1,4 +1,5 @@
 const words = require('shellwords');
+var Buffer = require('buffer/').Buffer
 
 // TODO -F, --form
 // TODO --data-binary
