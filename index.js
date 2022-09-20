@@ -143,6 +143,10 @@ function handleHeader(curl) {
     if (curl.header['content-length'] === undefined && curl.body) {
         curl.header['content-length'] = Buffer.byteLength(curl.body)
     }
+    //Accept-Encoding
+    if (curl.header['accept-encoding']) {
+        delete curl.headers['accept-encoding'];
+    }
 }
 
 function allHeaderToLowercase(headers) {
