@@ -5,11 +5,7 @@ const words = require('shellwords');
 // TODO --data-urlencode
 // TODO -r, --range
 
-/**
- * Attempt to parse the given curl string.
- */
-
-module.exports = exports.default = function (s) {
+const parse = function (s) {
     if (0 !== s.indexOf('curl ')) return
     const args = rewrite(words.split(s));
     const out = {method: 'GET', url: '', header: {}, body: ''};
@@ -90,9 +86,23 @@ module.exports = exports.default = function (s) {
                 break;
         }
     })
-
+    console.log("out", out)
     return out
-}
+};
+
+
+const safeParse = function (curlStr) {
+    let curl = parse(curlStr)
+    console.log("asfasdfasdf", curl)
+    //header的key转小写
+    allHeaderToLowcase(curl.header);
+    //转换header
+    handleHeader(curl)
+    console.log("aaaaaaaaaa", curl)
+
+    return curl
+};
+
 
 /**
  * Rewrite args for special cases such as -XPUT.
@@ -126,4 +136,30 @@ function parseField(s) {
 function isURL(s) {
     // TODO: others at some point
     return /^https?:\/\//.test(s)
+}
+
+function handleHeader(curl) {
+    //content-type
+    if (curl.header['content-type'] === undefined && curl.method === "POST") {
+        curl.header['content-type'] = 'application/x-www-form-urlencoded';
+    }
+    //content-length
+    if (curl.header['content-length'] === undefined && curl.body !== undefined) {
+        curl.header['content-length'] = Buffer.byteLength(body)
+    }
+}
+
+function allHeaderToLowcase(headers) {
+    for (const key in headers) {
+        headers[key.toLowerCase()] = headers[key]
+        if (key !== key.toLowerCase()) {
+            delete headers[key];
+        }
+    }
+}
+
+
+module.exports = {
+    parse,
+    safeParse
 }
