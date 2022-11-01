@@ -11,6 +11,7 @@
     "parse"
   ],
   "dependencies": {
+    "buffer": "^6.0.3",
     "shellwords": "^0.1.0"
   }
 }
